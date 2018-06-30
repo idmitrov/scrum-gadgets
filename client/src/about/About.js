@@ -1,9 +1,9 @@
 import React from 'react';
 
 const About = () => (
-  <section>
-    <h2>About</h2>
-  </section>
+  <div>
+    <p>About content</p>
+  </div>
 )
 
 export default About;

@@ -1,9 +1,9 @@
 import React from 'react';
 
 const Poker = () => (
-  <section>
-    <h2>Scrum Poker</h2>
-  </section>
+  <div>
+    <p>Poker content</p>
+  </div>
 );
 
 export default Poker;

@@ -1,9 +1,9 @@
 import React from 'react';
 
 const Daily = () => (
-  <section>
-    <h2>Scrum Daily</h2>
-  </section>
+  <div>
+    <p>Daily content</p>
+  </div>
 );
 
 export default Daily;
