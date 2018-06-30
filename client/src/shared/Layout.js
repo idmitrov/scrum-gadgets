@@ -26,7 +26,8 @@ import {
   Apps,
   Settings,
   Star,
-  Lock
+  Lock,
+  VpnKey
 } from '@material-ui/icons';
 
 const drawerWidth = 240;
@@ -144,15 +145,23 @@ class Layout extends Component {
             </Typography>
 
             {
-              this.props.authenticated ?
-                <IconButton
-                  color="inherit"
-                  onClick={this.props.logout}
-                  >
-                  <Lock />
-                </IconButton>
-                :
-                ''
+              this.props.authenticated ? (
+                <Tooltip title="Logout">
+                  <IconButton
+                    color="inherit"
+                    onClick={this.props.logout}>
+                    <Lock />
+                  </IconButton>
+                </Tooltip>
+              ) : (
+                <Link to="/login">
+                  <Tooltip title="Login">
+                    <ListItemIcon>
+                      <VpnKey />
+                    </ListItemIcon>
+                  </Tooltip>
+                </Link>
+              )
             }
           </Toolbar>
         </AppBar>
@@ -185,18 +194,26 @@ class Layout extends Component {
               </ListItem>
             </Tooltip>
           </Link>
-
-          {/* SETTINGS */}
-          <Link to="/settings" style={{textDecoration: 'none'}}>
-            <Tooltip title={this.state.isMenuOpened ? '' : 'Settings'}>
-              <ListItem button>
-                <ListItemIcon>
-                  <Settings />
-                </ListItemIcon>
-                <ListItemText primary="Settings" />
-              </ListItem>
-            </Tooltip>
-          </Link>
+          
+          {
+            this.props.authenticated ? (
+              <div>
+                {/* SETTINGS */}
+                <Link to="/settings" style={{textDecoration: 'none'}}>
+                  <Tooltip title={this.state.isMenuOpened ? '' : 'Settings'}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <Settings />
+                      </ListItemIcon>
+                      <ListItemText primary="Settings" />
+                    </ListItem>
+                  </Tooltip>
+                </Link>
+              </div>
+            ) : (
+              null
+            )
+          }
 
           {/* ABOUT */}
           <Link to="/about" style={{textDecoration: 'none'}}>
