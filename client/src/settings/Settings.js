@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 class Settings extends Component {
   render() {
     return(
-      <section>
-        <h2>Settings</h2>
-      </section>
+      <div>
+        <p>Settings contnet</p>
+      </div>
     )
   }
 }

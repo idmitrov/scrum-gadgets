@@ -46,9 +46,7 @@ class Register extends Component {
 
   render() {
     return (
-      <section>
-        <h2>Register</h2>
-
+      <div>
         <form>
           <div>
             <TextField
@@ -94,7 +92,7 @@ class Register extends Component {
             </Button>
           </div>
         </form>
-      </section>
+      </div>
     );
   }
 }

@@ -15,9 +15,24 @@ import Poker from '../tool/poker/Poker';
 import Daily from '../tool/daily/Daily';
 import Retrospective from '../tool/retrospective/Retrospective';
 
+import { appActions } from '../app/AppActions';
+
+export const routesMap = {
+  "/": "Dashboard",
+  "/login": "Login",
+  "/register": "Register",
+  "/about": "About",
+  "/tool/daily": "Daily",
+  "/tool/retrospective": "Restrospective",
+  "/tool/poker": "Poker",
+  "/settings": "Settings"
+};
+
 class Routes extends Component {
   onRouteChange(routePath) {
-    console.log(routePath)
+    let title = routesMap[routePath];
+
+    this.props.setPageTitle(title);
   }
 
   componentDidMount() {
@@ -57,6 +72,14 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setPageTitle: (title) => {
+      return dispatch(appActions.setPageTitle(title));
+    }
+  };
+}
+
 export default withRouter(
-  connect(mapStateToProps)(Routes)
+  connect(mapStateToProps, mapDispatchToProps)(Routes)
 );

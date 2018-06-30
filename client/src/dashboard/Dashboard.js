@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const Dashboard = (props) => (
-    <section>
-      <h2>Dashboard</h2>
-
+    <div>
       {/* TODO: Extract public part into Home and do logic in routes */}
       {
         props.authenticated ? (
@@ -28,7 +26,7 @@ const Dashboard = (props) => (
           <p>Welcome to Scrum Gadgets</p>
         )
       }
-    </section>
+    </div>
 );
 
 const mapStateToProps = (state) => {

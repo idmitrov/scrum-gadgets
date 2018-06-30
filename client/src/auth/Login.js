@@ -39,9 +39,7 @@ class Login extends Component {
 
   render() {
     return (
-      <section>
-        <h2>Login</h2>
-
+      <div>
         <form>
           <div>
             <TextField
@@ -77,7 +75,7 @@ class Login extends Component {
             </Button>
           </div>
         </form>
-      </section>
+      </div>
     );
   }
 }
