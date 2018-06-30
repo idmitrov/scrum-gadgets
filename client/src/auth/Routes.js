@@ -35,7 +35,7 @@ class Routes extends Component {
     this.props.setPageTitle(title);
   }
 
-  componentDidMount(prevProps) {
+  componentDidMount() {
     this.onRouteChange(this.props.location.pathname);
   }
 
