@@ -34,8 +34,10 @@ class Routes extends Component {
     return(
       <Switch>
         <Route path="/" exact component={Dashboard} />
-        <Route path="/login" exact component={Login} />
-        <Route path="/register" exact component={Register} />
+        
+        <PrivateRoute path="/login" exact redirect="/" authenticated={!this.props.authenticated} component={Login} />
+        <PrivateRoute path="/register" exact redirect="/" authenticated={!this.props.authenticated} component={Register} />
+        
         <Route path="/about" component={About} />
         <Route path="/settings" component={Settings} />
 
