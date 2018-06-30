@@ -13,9 +13,9 @@ class Register extends Component {
     super();
 
     this.state = {
-      username: null,
-      password: null,
-      confirmPassword: null
+      username: '',
+      password: '',
+      confirmPassword: ''
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
