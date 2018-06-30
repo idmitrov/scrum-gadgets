@@ -132,13 +132,15 @@ class Layout extends Component {
           position="absolute"
           className={classNames(classes.appBar, this.state.isMenuOpened && classes.appBarShift)}>
           <Toolbar disableGutters={!this.state.isMenuOpened}>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={this.toggleMenu}
-              className={classNames(classes.menuButton, this.state.isMenuOpened && classes.hide)}>
-              <Menu />
-            </IconButton>
+            <Tooltip title="Open">
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={this.toggleMenu}
+                className={classNames(classes.menuButton, this.state.isMenuOpened && classes.hide)}>
+                <Menu />
+              </IconButton>
+            </Tooltip>
 
             <Typography  className={classes.appBarTitle} variant="title" color="inherit" noWrap>
               {this.props.page}
@@ -178,9 +180,11 @@ class Layout extends Component {
               {this.props.heading}
             </h1>
 
-            <IconButton onClick={this.toggleMenu}>
-              {theme.direction === 'rtl' ? <ChevronRight /> : <ChevronLeft />}
-            </IconButton>
+            <Tooltip title="Close">
+              <IconButton onClick={this.toggleMenu}>
+                {theme.direction === 'rtl' ? <ChevronRight /> : <ChevronLeft />}
+              </IconButton>
+            </Tooltip>
           </div>
 
           {/* DASHBOARD */}
