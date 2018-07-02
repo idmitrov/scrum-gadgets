@@ -6,15 +6,19 @@ const server = http.createServer(app);
 const serverPort = 4001;
 
 const io = socketio(server);
+let connections = [];
 
 io.on('connection', (socket) => {
-    console.log('Socket connected')
-  
-    socket.on('disconnect', () => {
-        console.log('Socket disconnected')
-    });
+  console.log('Socket connected');
+  connections.push(socket);
+
+  socket.on('disconnect', () => {
+    connections.splice(connections.indexOf(socket), 1);
+
+    console.log('Socket disconnected');
+  });
 });
 
 server.listen(serverPort, () => {
-    console.log(`Listening on port ${serverPort}`)
+  console.log(`Listening on port ${serverPort}`)
 });
