@@ -7,6 +7,7 @@ import AuthReducer from '../auth/AuthReducer';
 import SharedReducer from '../shared/SharedReducer';
 
 import { ApiMiddleware } from '../shared/ApiMiddleware';
+import { SocketMiddleware } from '../shared/SocketMiddleware';
 
 const rootReducer = combineReducers({
   app: AppReducer,
@@ -17,7 +18,7 @@ const rootReducer = combineReducers({
 export default createStore(
   rootReducer,
   composeWithDevTools(
-    applyMiddleware(thunk, ApiMiddleware)
+    applyMiddleware(thunk, SocketMiddleware, ApiMiddleware)
   )
 );
 

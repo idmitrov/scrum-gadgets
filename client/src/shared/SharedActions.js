@@ -1,5 +1,7 @@
 export const sharedActionTypes = {
   callApi: 'API_CALL',
+  sendSocket: 'SOCKET_SEND',
+  receiveSocket: 'SOCKET_RECEIVE',
   setValidationError: 'VALIDATION_ERROR_SET'
 };
 
