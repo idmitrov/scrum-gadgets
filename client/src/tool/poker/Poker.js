@@ -3,10 +3,14 @@ import { connect } from 'react-redux';
 import Socket from '../../shared/Socket';
 
 class Poker extends Component {
-  componentDidMount() {
+  constructor() {
+    super();
+
     Socket.subscribe('response', (data) => {
       console.log(data)
     });
+
+    Socket.emit('publish', 'Client request');
   }
 
   componentWillUnmount() {
@@ -14,8 +18,6 @@ class Poker extends Component {
   }
 
   render() {
-    Socket.emit('publish', 'Client request');
-
     return (
       <div>
           <p>Poker content</p>
