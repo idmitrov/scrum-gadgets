@@ -19,5 +19,14 @@ export const sharedActions = {
         message: errorMessage
       }
     });
+  },
+  sendSocket: (event, data) => (dispatch) => {
+    return dispatch({
+      type: sharedActionTypes.sendSocket,
+      payload: {
+        event,
+        data
+      }
+    });
   }
 };

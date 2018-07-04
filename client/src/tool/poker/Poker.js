@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import { connect } from 'socket.io-client';
+import { sharedActions } from '../../shared/SharedActions';
 
-const Poker = () => {
-  // TODO: Move it in separated file
-  connect('http://localhost:4001/poker');
+class Poker extends Component {
+  render() {
+    this.props.sendSocket('test', 'hi');
 
-  return (
+    return (
       <div>
           <p>Poker content</p>
       </div>
-  );
+    );
+  }
 }
 
-export default Poker;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    sendSocket: (event, data) => {
+      return dispatch(sharedActions.sendSocket(event, data));
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Poker);
