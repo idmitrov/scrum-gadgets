@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import { sharedActions } from '../../shared/SharedActions';
+import Socket from '../../shared/Socket';
 
 class Poker extends Component {
+  componentDidMount() {
+    Socket.subscribe('response', (data) => {
+      console.log(data)
+    });
+  }
+
+  componentWillUnmount() {
+    Socket.unsubscribe('response');
+  }
+
   render() {
-    this.props.sendSocket('test', 'hi');
+    Socket.emit('publish', 'Client request');
 
     return (
       <div>
@@ -15,12 +24,4 @@ class Poker extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    sendSocket: (event, data) => {
-      return dispatch(sharedActions.sendSocket(event, data));
-    }
-  }
-}
-
-export default connect(null, mapDispatchToProps)(Poker);
+export default connect()(Poker);

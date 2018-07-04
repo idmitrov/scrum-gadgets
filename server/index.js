@@ -18,8 +18,10 @@ io.on('connection', (socket) => {
     console.log('Socket disconnected');
   });
 
-  socket.on('test', (data) => {
-    console.log(data)
+  socket.on('publish', (data) => {
+    console.log(data);
+
+    socket.emit('response', 'Server response');
   })
 });
 

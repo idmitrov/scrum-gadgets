@@ -1,7 +1,7 @@
 export const sharedActionTypes = {
   callApi: 'API_CALL',
-  sendSocket: 'SOCKET_SEND',
-  receiveSocket: 'SOCKET_RECEIVE',
+  emitSocket: 'EMIT_SOCKET',
+  subscribeSocket: 'SOCKET_SUBSCRIBE',
   setValidationError: 'VALIDATION_ERROR_SET'
 };
 
@@ -20,12 +20,21 @@ export const sharedActions = {
       }
     });
   },
-  sendSocket: (event, data) => (dispatch) => {
+  emitSocket: (event, data) => (dispatch) => {
     return dispatch({
-      type: sharedActionTypes.sendSocket,
+      type: sharedActionTypes.emitSocket,
       payload: {
         event,
         data
+      }
+    });
+  },
+  subscribeSocket: (event, handler) => (dispatch) => {
+    return dispatch({
+      type: sharedActionTypes.subscribeSocket,
+      payload: {
+        event,
+        handler
       }
     });
   }
