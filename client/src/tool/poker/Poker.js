@@ -6,15 +6,15 @@ class Poker extends Component {
   constructor() {
     super();
 
-    Socket.subscribe('response', (data) => {
+    Socket.subscribe('response-clients', (data) => {
       console.log(data)
     });
 
-    Socket.emit('publish', 'Client request');
+    Socket.emit('request-clients');
   }
 
   componentWillUnmount() {
-    Socket.unsubscribe('response');
+    Socket.unsubscribe('response-clients');
   }
 
   render() {
