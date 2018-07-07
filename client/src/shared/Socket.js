@@ -1,8 +1,21 @@
 import io from 'socket.io-client';
 
 class Socket {
-  constructor(context, url) {
-    this.context = context.connect(url);
+  constructor(context) {
+    this.context = context;
+  }
+
+  /**
+   * Connect to engine (default is socket.io-client)
+   * @name connect
+   * @param {String} url
+   */
+  connect(url = 'http://localhost:4001') {
+    try {
+      this.connection = this.context.connect(url);
+    } catch(e) {
+      console.log(e);
+    }
   }
 
   /**
@@ -12,7 +25,7 @@ class Socket {
    * @param {Any} data
    */
   emit(event, data) {
-    this.context.emit(event, data);
+    this.connection.emit(event, data);
   }
 
   /**
@@ -22,7 +35,7 @@ class Socket {
    * @param {Function} handler
    */
   subscribe(event, handler) {
-    this.context.on(event, handler);
+    this.connection.on(event, handler);
   }
 
   /**
@@ -32,8 +45,8 @@ class Socket {
    * @param {Function} handler
    */
   unsubscribe(event, handler) {
-    this.context.removeListener(event, handler);
+    this.connection.removeListener(event, handler);
   }
 }
 
-export default new Socket(io, 'http://localhost:4001');
+export default new Socket(io);

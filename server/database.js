@@ -8,15 +8,15 @@ class Database {
 
   connect(host, port, name) {
     try {
-      this.host = host;
-      this.port = port;
-      this.name = name;
       this.connectionString = `mongodb://${host}:${port}/${name}`;
 
       this.engine.connect(this.connectionString, {
         useNewUrlParser: true
       });
 
+      this.host = host;
+      this.port = port;
+      this.name = name;
       this.connection = this.engine.connection;
 
       this.connection.once('open', () => {

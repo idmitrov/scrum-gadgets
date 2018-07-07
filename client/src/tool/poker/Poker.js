@@ -6,6 +6,7 @@ class Poker extends Component {
   constructor() {
     super();
 
+    Socket.connect();
     Socket.subscribe('response-clients', (data) => {
       console.log(data)
     });
