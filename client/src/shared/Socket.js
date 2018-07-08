@@ -1,8 +1,8 @@
 import io from 'socket.io-client';
 
 class Socket {
-  constructor(context) {
-    this.context = context;
+  constructor(engine) {
+    this.engine = engine;
   }
 
   /**
@@ -12,7 +12,7 @@ class Socket {
    */
   connect(url = 'http://localhost:4001') {
     try {
-      this.connection = this.context.connect(url);
+      this.connection = this.engine.connect(url);
     } catch(e) {
       console.log(e);
     }

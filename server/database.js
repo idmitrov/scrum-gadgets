@@ -1,34 +1,40 @@
-let mongoose = require('mongoose');
-
+/**
+ * Wrap db enigne (By default mongoose) and provide public methods
+ * for using it
+ * @name Database
+ * @desc Wrap mongoose and provide public methods for using it
+ * @param {Object|Function} engnie
+ */
 class Database {
   constructor(engine) {
-
     this.engine = engine;
   }
 
-  connect(host, port, name) {
-    try {
-      this.connectionString = `mongodb://${host}:${port}/${name}`;
+  /**
+   * Connect to the database instance by provided parameters
+   * @name connect
+   * @desc Call engine.connect method.
+   * if success store the parameters and returns the connection/context
+   * other wise returns error
+   * @param {String} host
+   * @param {String|Number} port
+   * @param {String} name
+   * @param {Object} options
+   * @returns {Promise} connection
+   */
+  connect(host, port, name, options = null) {
+    this.connectionString = `mongodb://${host}:${port}/${name}`;
 
-      this.engine.connect(this.connectionString, {
-        useNewUrlParser: true
+    return this.engine.connect(this.connectionString, options)
+      .then((connection) => {
+        this.host = host;
+        this.port = port;
+        this.name = name;
+        this.options = options;
+        this.connection = connection;
+
+        return connection;
       });
-
-      this.host = host;
-      this.port = port;
-      this.name = name;
-      this.connection = this.engine.connection;
-
-      this.connection.once('open', () => {
-        console.log('[db] ready');
-      });
-
-      this.connection.on('error', (err) => {
-        console.error('[db] error:', err.message);
-      });
-    } catch(e) {
-      console.log(e);
-    }
   }
 }
 
