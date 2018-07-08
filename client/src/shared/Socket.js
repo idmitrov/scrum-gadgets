@@ -11,9 +11,11 @@ class Socket {
    * @name connect
    * @param {String} url
    */
-  connect(url = 'http://localhost:4001') {
+  connect(token, url = 'http://localhost:4001') {
     try {
-      this.connection = this.engine.connect(url);
+      this.connection = this.engine.connect(url, {
+        query: { token }
+      });
     } catch(e) {
       console.log(e);
     }

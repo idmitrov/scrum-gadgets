@@ -15,9 +15,17 @@ export const authActions = {
    * @param {String} password
    */
   login: (username, password) => (dispatch) => {
+    // TODO: Extract API endpoints
     return dispatch({
       type: authActionTypes.login,
-      payload: { username, password },
+      payload: {
+        url: 'http://localhost:3001/api/user/login',
+        method: 'POST',
+        data: {
+          username,
+          password
+        }
+      },
       success: authActionTypes.loggedin,
       meta: {
         api: true

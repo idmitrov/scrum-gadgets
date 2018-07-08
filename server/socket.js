@@ -11,13 +11,13 @@ class Socket {
       this.context
         .use((socket, next) => {
           // TODO: Get token from handShake and compare it with DB
-          let authenticated = true;
+          let authenticated = socket.handshake.query.token;
 
-          if (authenticated) {
+          if (authenticated && authenticated !== 'undefined') {
             next();
           }
 
-          next(new Error('Auth error'));
+          next(new Error('[socket] unauthenticated'));
         })
         .on('connection', (socket) => {
           console.log('[socket] connected');

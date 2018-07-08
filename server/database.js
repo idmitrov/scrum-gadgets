@@ -36,6 +36,11 @@ class Database {
         return connection;
       });
   }
+
+  seed() {
+    // ADMIN
+    require('./models/User').seedAdmin();
+  }
 }
 
 module.exports = Database;
