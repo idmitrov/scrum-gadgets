@@ -18,6 +18,10 @@ class Socket {
     }
   }
 
+  disconnect() {
+    this.connection.disconnect();
+  }
+
   /**
    * Emit a given event
    * @name emit
