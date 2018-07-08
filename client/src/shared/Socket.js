@@ -7,6 +7,7 @@ class Socket {
 
   /**
    * Connect to engine (default is socket.io-client)
+   * @desc Connect by calling engine.connect()
    * @name connect
    * @param {String} url
    */
@@ -18,12 +19,19 @@ class Socket {
     }
   }
 
+  /**
+   * Disconnect from engine (default is socket.io.client)
+   * @desc disconnect by calling engine.disconnect() method
+   * @name disconnect
+   */
   disconnect() {
     this.connection.disconnect();
   }
 
   /**
    * Emit a given event
+   * @desc Emit event
+   * by calling connection.emit() where connection = instance of engine i.e engine()
    * @name emit
    * @param {String} event
    * @param {Any} data
@@ -34,6 +42,8 @@ class Socket {
 
   /**
    * Subscribe to a given event
+   * @desc Subscribe to event
+   * by calling connection.subscribe() where connection = instance of engine i.e engine()
    * @name subscribe
    * @param {String} event
    * @param {Function} handler
@@ -44,6 +54,8 @@ class Socket {
 
   /**
    * Unsubscribe from a given event
+   *  @desc Unsubscribe from event
+   * by calling connection.subremoveListenerscribe() where connection = instance of engine i.e engine()
    * @name unsubscribe
    * @param {String} event
    * @param {Function} handler

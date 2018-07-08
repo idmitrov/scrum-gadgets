@@ -7,6 +7,7 @@ class Poker extends Component {
     super();
 
     Socket.connect();
+
     Socket.subscribe('response-clients', (data) => {
       console.log(data)
     });
@@ -15,7 +16,7 @@ class Poker extends Component {
   }
 
   componentWillUnmount() {
-    Socket.unsubscribe('response-clients');
+    Socket.disconnect();
   }
 
   render() {
