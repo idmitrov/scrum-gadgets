@@ -9,16 +9,17 @@ export const ApiMiddleware = store => next => action => {
       }
     };
 
-    if (action.payload.method !== 'GET') {
+    if (action.payload.method !== 'GET' && action.payload.data) {
       options.body = JSON.stringify(action.payload.data);
     }
 
     fetch(action.payload.url, options)
+      .then(response => response.json())
       .then((response) => {
-        if (response.errors && !response.errors.length) {
+        if (!response.errors.length) {
           store.dispatch({
             type: action.success,
-            payload: response
+            payload: response.data
           });
         }
       });

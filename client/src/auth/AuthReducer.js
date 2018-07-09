@@ -1,6 +1,7 @@
 import { authActionTypes } from './AuthActions';
 
 const authDefaults = {
+  user: null,
   authenticated: false,
   authorized: false
 };
@@ -10,6 +11,7 @@ const AuthReducer = (state = authDefaults, action) => {
     case authActionTypes.loggedin: {
       return {
         ...state,
+        user: action.payload,
         authenticated: true
       }
     }
@@ -22,6 +24,7 @@ const AuthReducer = (state = authDefaults, action) => {
     case authActionTypes.logout: {
       return {
         ...state,
+        user: null,
         authenticated: false
       }
     }
