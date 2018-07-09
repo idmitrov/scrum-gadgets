@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import Socket from '../../shared/Socket';
 
 class Poker extends Component {
-  constructor() {
-    super();
-
-    Socket.connect('token');
+  componentDidMount() {
+    Socket.connect(this.props.user.username, this.props.user.token);
 
     Socket.subscribe('response-clients', (data) => {
-      console.log(data)
+      // TODO: REPLACE LOCAL STATE WITH REDUX
+      this.setState({
+        clients: data
+      })
     });
 
     Socket.emit('request-clients');
@@ -23,9 +24,17 @@ class Poker extends Component {
     return (
       <div>
           <p>Poker content</p>
+
+          Participants: {this.state ? this.state.clients : 'none'}
       </div>
     );
   }
 }
 
-export default connect()(Poker);
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user
+  };
+}
+
+export default connect(mapStateToProps)(Poker);

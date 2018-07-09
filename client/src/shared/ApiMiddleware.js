@@ -45,12 +45,12 @@ export const ApiMiddleware = store => next => action => {
       })
       .catch((response) => {
         if (!response) {
-        // TODO: Handle Unexpected Errors
-        console.log(`Unexpected error: ${response}`);
+          // TODO: Handle Unexpected Errors
+          console.log(`Unexpected error: ${response}`);
         } else {
           if (response.status) {
-          // TODO: Handle HTTP Errors
-            switch(response.status) {
+            // TODO: Handle HTTP Errors
+            switch (response.status) {
               case 404:
                 console.log(`Error 404: ${response.statusText}`);
                 break;

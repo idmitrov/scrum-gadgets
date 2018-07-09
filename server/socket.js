@@ -1,7 +1,7 @@
 class Socket {
   constructor(engine, server) {
     this.engine = engine;
-    this.connections = [];
+    this.connections = {};
   }
 
   connect(server) {
@@ -10,27 +10,43 @@ class Socket {
 
       this.context
         .use((socket, next) => {
-          // TODO: Get token from handShake and compare it with DB
-          let authenticated = true;
+          // TODO: authenticate socket.token
+          let authenticated = socket.handshake.query.token;
 
           if (authenticated && authenticated !== 'undefined') {
+            socket.bearer = socket.handshake.query.token;
+            socket.username = socket.handshake.query.username;
+
             next();
           }
 
           next(new Error('[socket] unauthenticated'));
         })
         .on('connection', (socket) => {
-          console.log('[socket] connected');
-          this.connections.push(socket);
+          if (this.connections[socket.username]) {
+            console.log('[socket] socket connections increased');
+            this.connections[socket.username].connections += 1;
+          } else {
+            console.log('[socket] new socket connected');
+
+            this.connections[socket.username] = {
+              connections: 1,
+              socket
+            }
+          }
 
           socket.on('disconnect', () => {
-            this.connections.splice(this.connections.indexOf(socket), 1);
-
-            console.log('[socket] disconnected');
+            if (this.connections[socket.username].connections <= 1) {
+              delete this.connections[socket.username];
+              console.log('[socket] disconnected');
+            } else {
+              this.connections[socket.username].connections -= 1;
+              console.log('[socket] socket connections decreased');
+            }
           });
 
           socket.on('request-clients', () => {
-            socket.emit('response-clients', this.connections.map(c => c.id));
+            socket.emit('response-clients', Object.keys(this.connections));
           })
         });
     } catch (e) {

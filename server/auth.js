@@ -10,7 +10,6 @@ const localOptions = { session: false, passReqToCallback: true };
 const localStrategy = new Strategy(localOptions, (req, username, password, done) => {
   User.findOne({ username: username })
     .then(foundUser => {
-
       if(!foundUser) {
         return done({ message: 'Invalid credentials!' });
       }
