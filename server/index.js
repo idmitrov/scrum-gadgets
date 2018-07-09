@@ -5,12 +5,13 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const config = require('./config');
+
+require('./auth')();
+
 const Router = require('./Router');
 const App = require('./App');
 const Database = require('./database');
 const Socket = require('./socket');
-
-require('./auth')();
 
 const db = new Database(mongoose);
 const server = http.createServer(App.init());

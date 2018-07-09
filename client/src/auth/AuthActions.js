@@ -19,7 +19,7 @@ export const authActions = {
     return dispatch({
       type: authActionTypes.login,
       payload: {
-        url: 'http://localhost:3001/api/user/login',
+        url: '//localhost:3001/api/user/login',
         method: 'POST',
         data: {
           username,

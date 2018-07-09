@@ -10,7 +10,7 @@ export const ApiMiddleware = store => next => action => {
     };
 
     if (action.payload.method !== 'GET') {
-      options.body = action.payload.data;
+      options.body = JSON.stringify(action.payload.data);
     }
 
     fetch(action.payload.url, options)

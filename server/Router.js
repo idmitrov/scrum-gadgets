@@ -1,6 +1,10 @@
 const express = require('express');
 const path = require('path');
 
+const {
+  authController
+} = require('./controllers');
+
 class Router {
   constructor() {
     this.prefix = '/api';
@@ -10,19 +14,13 @@ class Router {
     route.use(express.static(path.resolve(__dirname, '../', 'public')));
 
     route
-      .post(`${this.prefix}/user/login`, (req, res) => {
-        console.log('LOGIN');
-        // TODO: Call controller and return DB data
-        return res
-          .status(200)
-          .json({ data: null, errors: [] })
-      });
+      .post(`${this.prefix}/user/login`, authController.login);
 
-    route.get('*', (req, res) => {
-      let PathToindexFile = path.resolve(__dirname, '../client/', 'public', 'index.html');
+    // route.get('*', (req, res) => {
+    //   let PathToindexFile = path.resolve(__dirname, '../client/', 'public', 'index.html');
 
-      res.sendFile(PathToindexFile);
-    })
+    //   res.sendFile(PathToindexFile);
+    // })
   }
 }
 
