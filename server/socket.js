@@ -11,7 +11,7 @@ class Socket {
       this.context
         .use((socket, next) => {
           // TODO: Get token from handShake and compare it with DB
-          let authenticated = socket.handshake.query.token;
+          let authenticated = true;
 
           if (authenticated && authenticated !== 'undefined') {
             next();

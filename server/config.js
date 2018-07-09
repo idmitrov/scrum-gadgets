@@ -13,7 +13,7 @@ const config = {
       }
     },
     server: {
-      port: 3001
+      port: 4001
     },
     auth: {
       secret: 'secret'

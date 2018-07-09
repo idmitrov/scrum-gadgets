@@ -1,3 +1,5 @@
+import { authEnpoints } from '../auth/ApiEndpoints';
+
 export const authActionTypes = {
   login: 'AUTH_LOGIN',
   loggedin: 'AUTH_LOGGEDIN',
@@ -19,8 +21,8 @@ export const authActions = {
     return dispatch({
       type: authActionTypes.login,
       payload: {
-        url: '//localhost:3001/api/user/login',
-        method: 'POST',
+        url: authEnpoints.login.url,
+        method: authEnpoints.login.method,
         data: {
           username,
           password
