@@ -10,17 +10,12 @@ class Socket {
 
       this.context
         .use((socket, next) => {
-          // TODO: authenticate socket.token
-          let authenticated = socket.handshake.query.token;
+          // TODO: Implement authentication
+          socket.bearer = socket.handshake.query.token;
+          socket.username = socket.handshake.query.username;
+          socket.voted = false;
 
-          if (authenticated && authenticated !== 'undefined') {
-            socket.bearer = socket.handshake.query.token;
-            socket.username = socket.handshake.query.username;
-
-            next();
-          }
-
-          next(new Error('[socket] unauthenticated'));
+          next();
         })
         .on('connection', (socket) => {
           if (this.connections[socket.username]) {
@@ -46,7 +41,19 @@ class Socket {
           });
 
           socket.on('request-clients', () => {
-            let clients = Object.keys(this.connections).join(', ');
+            let clients = Object
+              .keys(this.connections)
+              .map((connectionName) => {
+                let connection = this.connections[connectionName];
+
+                return {
+                  name: connectionName,
+                  token: connection.socket.bearer,
+                  id: connection.socket.id
+                }
+              });
+
+              console.log(clients)
 
             this.context.sockets.emit('response-clients', clients);
           })

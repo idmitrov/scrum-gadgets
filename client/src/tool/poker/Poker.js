@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Socket from '../../shared/Socket';
 
+import PokerParticipan from './PokerParticipan';
+
 class Poker extends Component {
   componentDidMount() {
     Socket.connect(this.props.user.username, this.props.user.token);
 
     Socket.subscribe('response-clients', (data) => {
       // TODO: REPLACE LOCAL STATE WITH REDUX
-      this.setState({
-        clients: data
-      })
+      this.props.setPokerClinets(data);
+      // this.setState({
+      //   clients: data
+      // })
     });
 
     Socket.emit('request-clients');
@@ -25,7 +28,11 @@ class Poker extends Component {
       <div>
           <p>Poker content</p>
 
-          Participants: {this.state ? this.state.clients : 'none'}
+          {
+            this.props.clients.map(client =>
+              <PokerParticipan key={client.id} participant={client}></PokerParticipan>
+            )
+          }
       </div>
     );
   }
@@ -33,8 +40,21 @@ class Poker extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    clients: state.poker.clients
   };
 }
 
-export default connect(mapStateToProps)(Poker);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setPokerClinets: (clients) => {
+      return dispatch({
+        // TODO: EXRTACT ACTION TYPE
+        type: 'POKER_CLIENTS_SET',
+        payload: clients
+      });
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Poker);
