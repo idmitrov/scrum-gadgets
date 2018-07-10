@@ -46,7 +46,9 @@ class Socket {
           });
 
           socket.on('request-clients', () => {
-            socket.emit('response-clients', Object.keys(this.connections));
+            let clients = Object.keys(this.connections).join(', ');
+
+            this.context.sockets.emit('response-clients', clients);
           })
         });
     } catch (e) {
