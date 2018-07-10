@@ -15,12 +15,8 @@ class Router {
 
     route
       .post(`${this.prefix}/user/login`, authController.login);
-
-    // route.get('*', (req, res) => {
-    //   let PathToindexFile = path.resolve(__dirname, '../client/', 'public', 'index.html');
-
-    //   res.sendFile(PathToindexFile);
-    // })
+    route
+      .post(`${this.prefix}/user/register`, authController.register);
   }
 }
 

@@ -40,10 +40,18 @@ export const authActions = {
    * @param {String} username
    * @param {String} password
    */
-  register: (username, password) => (dispatch) => {
+  register: (email, username, password) => (dispatch) => {
     return dispatch({
       type: authActionTypes.register,
-      payload: { username, password },
+      payload: {
+        url: authEnpoints.register.url,
+        method: authEnpoints.register.method,
+        data: {
+          email,
+          username,
+          password
+        }
+      },
       success: authActionTypes.registered,
       meta: {
         api: true

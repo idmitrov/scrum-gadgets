@@ -13,6 +13,7 @@ class Register extends Component {
     super();
 
     this.state = {
+      email: '',
       username: '',
       password: '',
       confirmPassword: ''
@@ -38,7 +39,7 @@ class Register extends Component {
    */
   register(e) {
     if (this.state.password === this.state.confirmPassword) {
-      this.props.register(this.state.username, this.state.password);
+      this.props.register(this.state.email ,this.state.username, this.state.password);
     } else {
       this.props.setValidationError(validationConstants.register.passwordDoesNotMatch);
     }
@@ -48,6 +49,17 @@ class Register extends Component {
     return (
       <div>
         <form>
+          <div>
+            <TextField
+              type="email"
+              name="email"
+              required
+              label="Email"
+              autoComplete="you@example.com"
+              onChange={this.handleInputChange}
+            />
+          </div>
+
           <div>
             <TextField
               type="text"
@@ -111,8 +123,8 @@ const mapDispatchToProps = (dispatch) => {
      * @param {String} username
      * @param {String} password
      */
-    register(username, password) {
-      return dispatch(authActions.register(username, password));
+    register(email, username, password) {
+      return dispatch(authActions.register(email, username, password));
     },
     /**
      * @name setValidationError
