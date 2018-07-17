@@ -61,7 +61,7 @@ export const ApiMiddleware = (store) => (next) => (action) => {
                   console.log(`Error 500: ${response.statusText}`);
                   break;
                 default:
-                  console.log(`Something went wrong ${response.statusText}`);
+                  console.log(`Something went wrong: ${response.statusText}`);
               }
             } else if (response.errors) {
               store.dispatch(sharedActions.setNotifications(response.errors));
