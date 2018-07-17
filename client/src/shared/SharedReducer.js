@@ -7,6 +7,21 @@ const sharedDefaults = {
 
 const SharedReducer = (state = sharedDefaults, action) => {
   switch(action.type) {
+    case sharedActionTypes.resetNotifications: {
+      return Object.assign({}, state, {
+        notifications: action.payload
+      });
+    }
+    case sharedActionTypes.setNotifications: {
+      return Object.assign({}, state, {
+        notifications: action.payload
+      });
+    }
+    case sharedActionTypes.removeNotifications: {
+      return Object.assign({}, state, {
+        notifications: action.payload
+      });
+    }
     case sharedActionTypes.setValidationError: {
       return state;
     }

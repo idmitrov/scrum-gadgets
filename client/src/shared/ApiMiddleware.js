@@ -1,10 +1,11 @@
 import AppConfig from '../app/AppConfig';
+import { sharedActions } from '../shared/SharedActions';
 
 // TODO: Find a good way to determine environment
 const env = 'dev';
 const { host, port } = AppConfig[env].api;
 
-export const ApiMiddleware = store => next => action => {
+export const ApiMiddleware = (store) => (next) => (action) => {
   if (action.meta && action.meta.api) {
     // TODO: Replace it with fetch() and real API endpoints
     let options = {
@@ -35,6 +36,8 @@ export const ApiMiddleware = store => next => action => {
       })
       .then((response) => {
         if (response.errors && response.errors.length) {
+          store.dispatch(sharedActions.setNotifications(response.errors));
+
           Promise.reject(response.errors);
         } else if (response.errors && !response.errors.length) {
           Promise.resolve(store.dispatch({

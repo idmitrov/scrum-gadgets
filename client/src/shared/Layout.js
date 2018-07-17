@@ -16,7 +16,8 @@ import {
   Tooltip,
   Typography,
   IconButton,
-  withStyles
+  withStyles,
+  Snackbar
 } from '@material-ui/core';
 
 import {
@@ -27,8 +28,12 @@ import {
   Settings,
   Star,
   Lock,
-  VpnKey
+  VpnKey,
+  ClearAll,
+  Close
 } from '@material-ui/icons';
+
+import { sharedActions } from './SharedActions';
 
 const drawerWidth = 240;
 const styles = theme => ({
@@ -103,7 +108,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
     paddingTop: theme.spacing.unit * 3 + 64,
-  },
+  }
 });
 
 class Layout extends Component {
@@ -198,7 +203,7 @@ class Layout extends Component {
               </ListItem>
             </Tooltip>
           </Link>
-          
+
           {
             this.props.authenticated ? (
               <div>
@@ -236,12 +241,37 @@ class Layout extends Component {
         <main className={classes.content}>
           {this.props.children}
         </main>
+
+        {/* NOTIFICATIONS */}
+        <Snackbar
+          open={this.props.notificationsCount > 0}
+          message={this.props.notification != null ? this.props.notification.message : null}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          action={
+            <div>
+              {
+                this.props.notificationsCount > 1 ? (
+                  <Tooltip title={'Dismiss all'}>
+                    <ClearAll onClick={this.props.closeAllNotifications}></ClearAll>
+                  </Tooltip>
+                ) : (
+                  null
+                )
+              }
+
+              <Tooltip title={'Dismiss'}>
+                <Close onClick={this.props.closeNotification}></Close>
+              </Tooltip>
+            </div>
+          }
+          onClose={this.props.closeNotification}
+        />
       </div>
     );
   }
 
   /**
-   * toggleMenu
+   * Toggle menu opened/close
    * @name toggleMenu
    * @desc toggle menu opened/closed
    * @return {void}
@@ -254,7 +284,9 @@ class Layout extends Component {
 const mapStateToProps = (state) => {
   return {
     page: state.app.page,
-    authenticated: state.auth.authenticated
+    authenticated: state.auth.authenticated,
+    notificationsCount: state.shared.notifications.length,
+    notification: state.shared.notifications.length ? state.shared.notifications[0] : null
   };
 }
 
@@ -262,6 +294,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => {
       return dispatch(authActions.logout());
+    },
+    closeNotification: () => {
+      return dispatch(sharedActions.removeNotifications());
+    },
+    closeAllNotifications: () => {
+      return dispatch(sharedActions.resetNotifications());
     }
   }
 }
