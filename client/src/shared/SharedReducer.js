@@ -24,7 +24,7 @@ const SharedReducer = (state = sharedDefaults, action) => {
 
       return Object.assign({}, state, { notifications });
     }
-    // REMOVE NOTIFICATION
+    // SPLICE NOTIFICATION
     case sharedActionTypes.spliceNotifications: {
       let notifications = state.notifications.slice()
       notifications.splice(action.payload.index, action.payload.count);

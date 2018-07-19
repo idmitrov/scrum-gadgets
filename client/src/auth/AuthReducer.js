@@ -8,6 +8,7 @@ const authDefaults = {
 
 const AuthReducer = (state = authDefaults, action) => {
   switch(action.type) {
+    // LOGGEDIN
     case authActionTypes.loggedin: {
       return {
         ...state,
@@ -15,6 +16,7 @@ const AuthReducer = (state = authDefaults, action) => {
         authenticated: true
       }
     }
+    // REGISTERED
     case authActionTypes.registered: {
       return {
         ...state,
@@ -22,6 +24,7 @@ const AuthReducer = (state = authDefaults, action) => {
         authenticated: true
       }
     }
+    // LOGOUT
     case authActionTypes.logout: {
       return {
         ...state,

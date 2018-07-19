@@ -7,6 +7,7 @@ const appDefaults = {
 
 const AppReducer = (state = appDefaults, action) => {
   switch(action.type) {
+    // SET PAGE TITLE
     case appActionTypes.setPageTitle: {
       return {
         ...state,
