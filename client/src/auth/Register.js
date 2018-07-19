@@ -41,7 +41,7 @@ class Register extends Component {
     if (this.state.password === this.state.confirmPassword) {
       this.props.register(this.state.email ,this.state.username, this.state.password);
     } else {
-      this.props.setValidationError(validationConstants.register.passwordDoesNotMatch);
+      this.props.pushNotificationError(validationConstants.register.passwordDoesNotMatch);
     }
   }
 
@@ -118,26 +118,28 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     /**
+     * Dispatch authActions.register with user credentials
      * @name register
-     * @desc Dispatch register action with user data and trigger Api middleware
+     * @desc Dispatch register action with user credentials and trigger and on success
+     * dispatch notification with message and type 'success'
      * @param {String} username
      * @param {String} password
      */
     register(email, username, password) {
       return dispatch(authActions.register(email, username, password))
         .then(() => {
-          let notification = { type: 'success', message: 'Register successful' };
+          let notifications = [{ message: 'Register successful', type: 'success' }];
 
-          dispatch(sharedActions.addNotification(notification));
+          dispatch(sharedActions.setNotifications(notifications));
         });
     },
     /**
-     * @name setValidationError
-     * @desc Dispatch setValidationError action with error message
-     * @param {String} errorMessage
+     * @name pushNotificationError
+     * @desc Dispatch pushNotification action with message and type 'error'
+     * @param {String} message
      */
-    setValidationError(errorMessage) {
-      return dispatch(sharedActions.setValidationError(errorMessage));
+    pushNotificationError(message) {
+      return dispatch(sharedActions.pushNotification(message, 'error'));
     }
   };
 }

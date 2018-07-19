@@ -96,9 +96,9 @@ const mapDispatchToProps = (dispatch) => {
     login(username, password) {
       return dispatch(authActions.login(username, password))
         .then(() => {
-          let notification = { type: 'success', message: 'Login successful' };
+          let notifications = [{ message: 'Login successful', type: 'success' }];
 
-          dispatch(sharedActions.addNotification(notification));
+          dispatch(sharedActions.setNotifications(notifications));
         });
     }
   };

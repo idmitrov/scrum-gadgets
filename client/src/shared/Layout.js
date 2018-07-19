@@ -291,13 +291,13 @@ const mapDispatchToProps = (dispatch) => {
     logout: () => {
       return dispatch(authActions.logout())
         .then(() => {
-          let notification = { type: 'success', message: 'Logout successful' };
+          let notifications = [{ message: 'Logout successful', type: 'success' }];
 
-          dispatch(sharedActions.addNotification(notification));
+          dispatch(sharedActions.setNotifications(notifications));
         });
     },
     closeNotification: () => {
-      return dispatch(sharedActions.removeNotifications());
+      return dispatch(sharedActions.popNotification());
     },
     closeAllNotifications: () => {
       return dispatch(sharedActions.resetNotifications());

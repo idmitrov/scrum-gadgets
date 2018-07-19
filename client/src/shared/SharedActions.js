@@ -1,57 +1,55 @@
 export const sharedActionTypes = {
   callApi: 'API_CALL',
-  emitSocket: 'EMIT_SOCKET',
-  subscribeSocket: 'SOCKET_SUBSCRIBE',
-  setValidationError: 'VALIDATION_ERROR_SET',
-  setNotifications: 'NOTIFICATION_SET',
-  addNotification: 'NOTIFICATION_ADD',
-  removeNotifications: 'NOTIFICATIONS_REMOVE',
-  resetNotifications: 'NOTIFICATIONS_RESET'
+  pushNotification: 'NOTIFICATION_PUSH',
+  spliceNotifications: 'NOTIFICATIONS_SPLICE',
+  popNotification: 'NOTIFICATION_POP',
+  setNotifications: 'NOTIFICATIONS_SET',
+  resetNotifications: 'NOTIFICATIONS_RESET',
+  setError: 'SET_ERROR'
 };
 
 export const sharedActions = {
   /**
-   * Clear all state notifications i.e set empty array
-   * @name resetNotifications
-   * @desc dispatch sharedActionTypes.resetNotifications
+   * Dispatch sharedActionTypes.pushNotification action
+   * @name pushNotification
+   * @desc Dispatch sharedActionTypes.pushNotification action
+   * along with the notification type and message
+   * @param {String} message
+   * @param {String} type = 'info'
    */
-  resetNotifications: () => (dispatch) => {
+  pushNotification: (message, type = 'info') => (dispatch) => {
     return dispatch({
-      type: sharedActionTypes.resetNotifications,
-      payload: []
-    });
-  },
-  addNotification: (notification) => (dispatch, getState) => {
-    let state = getState();
-    let notifications = state.shared.notifications.concat(notification);
-
-    return dispatch({
-      type: sharedActionTypes.addNotification,
-      payload: notifications
+      type: sharedActionTypes.pushNotification,
+      payload: { message, type }
     });
   },
   /**
-   * Splice state notifications array by given index and count of notifications to splice
-   * @name removeNotifications
-   * @desc dispatch sharedActionTypes.removeNotifications
-   * @param {Number} index = 0
+   * Dispatch sharedActionType.popNotification action
+   * @name popNotification
+   */
+  popNotification: () => (dispatch) => {
+    return dispatch({
+      type: sharedActionTypes.popNotification
+    });
+  },
+  /**
+   * Dispatch sharedActionTypes.spliceNotifications
+   * @name spliceNotifications
+   * @desc Dispatch sharedActionTypes.spliceNotifications
+   * along with the starting index and the count of notifications to splice
+   * @param {Number} index
    * @param {Number} count = 1
    */
-  removeNotifications: (index = 0, count = 1) => (dispatch, getState) => {
-    let state = getState();
-    let notificationsUpdate = state.shared.notifications.slice();
-
-    notificationsUpdate.splice(index, count);
-
+  spliceNotifications: (index, count = 1) => (dispatch) => {
     return dispatch({
-      type: sharedActionTypes.removeNotifications,
-      payload: notificationsUpdate
+      type: sharedActionTypes.spliceNotifications,
+      payload: { index, count }
     });
   },
   /**
-   * Push a new notification into state notifications array
+   * Dispatch sharedActionTypes.setNotifications
    * @name setNotifications
-   * @desc dispatch sharedActionTypes.setNotifications
+   * @desc Dispatch sharedActionTypes.setNotifications with given notifications
    * @param {Array} notifications
    */
   setNotifications: (notifications) => (dispatch) => {
@@ -61,36 +59,26 @@ export const sharedActions = {
     });
   },
   /**
-   * Push a validation error into state errors array
-   * @name setValidationError
-   * @desc dispatch sharedActionTypes.setValidationError with error type and message
-   * @param {String} errorMessage
+   * Dispatch sharedActionTypes.resetNotifications
+   * @name resetNotifications
+   * @desc Dispatch sharedActionTypes.resetNotifications
    */
-  setValidationError: (errorMessage) => (dispatch) => {
+  resetNotifications: () => (dispatch) => {
     return dispatch({
-      type: sharedActionTypes.setValidationError,
-      payload: {
-        type: 'validation',
-        message: errorMessage
-      }
+      type: sharedActionTypes.resetNotifications
     });
   },
-  emitSocket: (event, data) => (dispatch) => {
+  /**
+   * Dispatch sharedActionTypes.addError
+   * @name addError
+   * @desc Dispatch sharedActionTypes.addError along with the error type and message
+   * @param {String} message
+   * @param {String} type = 'error'
+   */
+  addError: (message, type = 'error') => (dispatch) => {
     return dispatch({
-      type: sharedActionTypes.emitSocket,
-      payload: {
-        event,
-        data
-      }
-    });
-  },
-  subscribeSocket: (event, handler) => (dispatch) => {
-    return dispatch({
-      type: sharedActionTypes.subscribeSocket,
-      payload: {
-        event,
-        handler
-      }
+      type: sharedActionTypes.setError,
+      payload: { message, type }
     });
   }
 };
