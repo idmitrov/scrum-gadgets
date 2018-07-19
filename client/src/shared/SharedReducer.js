@@ -1,7 +1,6 @@
 import { sharedActionTypes } from './SharedActions';
 
 const sharedDefaults = {
-  errors: [],
   notifications: []
 };
 
@@ -10,7 +9,7 @@ const SharedReducer = (state = sharedDefaults, action) => {
     // SET NOTIFICATIONS
     case sharedActionTypes.setNotifications: {
       return Object.assign({}, state, {
-        notifications: action.payload
+        notifications: action.payload.notifications
       });
     }
     // RESET NOTIFICATIONS
@@ -21,7 +20,7 @@ const SharedReducer = (state = sharedDefaults, action) => {
     }
     // PUSH NOTIFICATION
     case sharedActionTypes.pushNotification: {
-      let notifications = state.notifications.concat(action.payload);
+      let notifications = state.notifications.concat(action.payload.notification);
 
       return Object.assign({}, state, { notifications });
     }
@@ -38,12 +37,6 @@ const SharedReducer = (state = sharedDefaults, action) => {
       notifications.splice(state.notifications.length - 1, 1);
 
       return Object.assign({}, state, { notifications });
-    }
-    // ADD ERROR
-    case sharedActionTypes.addError: {
-      let errors = state.errors.concat(action.payload);
-
-      return Object.assign({}, state, { errors });
     }
     default: return state;
   }

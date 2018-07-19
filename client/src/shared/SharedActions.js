@@ -4,8 +4,7 @@ export const sharedActionTypes = {
   spliceNotifications: 'NOTIFICATIONS_SPLICE',
   popNotification: 'NOTIFICATION_POP',
   setNotifications: 'NOTIFICATIONS_SET',
-  resetNotifications: 'NOTIFICATIONS_RESET',
-  setError: 'SET_ERROR'
+  resetNotifications: 'NOTIFICATIONS_RESET'
 };
 
 export const sharedActions = {
@@ -20,7 +19,9 @@ export const sharedActions = {
   pushNotification: (message, type = 'info') => (dispatch) => {
     return dispatch({
       type: sharedActionTypes.pushNotification,
-      payload: { message, type }
+      payload: {
+        notification: { message, type }
+      }
     });
   },
   /**
@@ -55,7 +56,7 @@ export const sharedActions = {
   setNotifications: (notifications) => (dispatch) => {
     return dispatch({
       type: sharedActionTypes.setNotifications,
-      payload: notifications
+      payload: { notifications }
     });
   },
   /**
@@ -66,19 +67,6 @@ export const sharedActions = {
   resetNotifications: () => (dispatch) => {
     return dispatch({
       type: sharedActionTypes.resetNotifications
-    });
-  },
-  /**
-   * Dispatch sharedActionTypes.addError
-   * @name addError
-   * @desc Dispatch sharedActionTypes.addError along with the error type and message
-   * @param {String} message
-   * @param {String} type = 'error'
-   */
-  addError: (message, type = 'error') => (dispatch) => {
-    return dispatch({
-      type: sharedActionTypes.setError,
-      payload: { message, type }
     });
   }
 };
