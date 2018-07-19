@@ -4,6 +4,7 @@ export const sharedActionTypes = {
   subscribeSocket: 'SOCKET_SUBSCRIBE',
   setValidationError: 'VALIDATION_ERROR_SET',
   setNotifications: 'NOTIFICATION_SET',
+  addNotification: 'NOTIFICATION_ADD',
   removeNotifications: 'NOTIFICATIONS_REMOVE',
   resetNotifications: 'NOTIFICATIONS_RESET'
 };
@@ -18,6 +19,15 @@ export const sharedActions = {
     return dispatch({
       type: sharedActionTypes.resetNotifications,
       payload: []
+    });
+  },
+  addNotification: (notification) => (dispatch, getState) => {
+    let state = getState();
+    let notifications = state.shared.notifications.concat(notification);
+
+    return dispatch({
+      type: sharedActionTypes.addNotification,
+      payload: notifications
     });
   },
   /**

@@ -5,6 +5,7 @@ import { Button, TextField } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 import { authActions } from './AuthActions';
+import { sharedActions } from '../shared/SharedActions';
 
 class Login extends Component {
   constructor() {
@@ -93,7 +94,12 @@ const mapDispatchToProps = (dispatch) => {
      * @desc Dispatch login action with user data and trigger Api middleware
      */
     login(username, password) {
-      return dispatch(authActions.login(username, password));
+      return dispatch(authActions.login(username, password))
+        .then(() => {
+          let notification = { type: 'success', message: 'Login successful' };
+
+          dispatch(sharedActions.addNotification(notification));
+        });
     }
   };
 }

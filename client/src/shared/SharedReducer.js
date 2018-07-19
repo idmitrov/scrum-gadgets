@@ -7,16 +7,9 @@ const sharedDefaults = {
 
 const SharedReducer = (state = sharedDefaults, action) => {
   switch(action.type) {
-    case sharedActionTypes.resetNotifications: {
-      return Object.assign({}, state, {
-        notifications: action.payload
-      });
-    }
-    case sharedActionTypes.setNotifications: {
-      return Object.assign({}, state, {
-        notifications: action.payload
-      });
-    }
+    case sharedActionTypes.resetNotifications:
+    case sharedActionTypes.setNotifications:
+    case sharedActionTypes.addNotification:
     case sharedActionTypes.removeNotifications: {
       return Object.assign({}, state, {
         notifications: action.payload
