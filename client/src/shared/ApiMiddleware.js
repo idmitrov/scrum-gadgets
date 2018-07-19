@@ -37,34 +37,42 @@ export const ApiMiddleware = (store) => (next) => (action) => {
         })
         .then((response) => {
           if (response.errors && response.errors.length) {
-            throw response;
-          }
+            store.dispatch(sharedActions.setNotifications(response.errors));
 
-          resolve(store.dispatch({
-            type: action.success,
-            payload: response.data
-          }));
+            reject(response.errors);
+          } else {
+            resolve(store.dispatch({
+              type: action.success,
+              payload: response.data
+            }));
+          }
         })
         .catch((response) => {
-          reject(response);
+          if (response.message) {
+            switch(response.message) {
+              case 'Failed to fetch': {
+                let notifications = [
+                  {
+                    type: 'error',
+                    message: 'Could not connect to server. Please try again later.'
+                  }
+                ];
 
-          // TODO: REPLACE CONSOLE WITH LOGGER
-          if (!response) {
-            console.log(`Unexpected error: ${response}`);
-          } else {
-            if (response.status) {
-              switch (response.status) {
-                case 404:
-                  console.log(`Error 404: ${response.statusText}`);
-                  break;
-                case 500:
-                  console.log(`Error 500: ${response.statusText}`);
-                  break;
-                default:
-                  console.log(`Something went wrong: ${response.statusText}`);
+                store.dispatch(sharedActions.setNotifications(notifications));
+                break;
               }
-            } else if (response.errors) {
-              store.dispatch(sharedActions.setNotifications(response.errors));
+              default: console.log(response.message);
+            }
+          } else if (response.status) {
+            switch (response.status) {
+              case 404:
+                console.log(`Error 404: ${response.statusText}`);
+                break;
+              case 500:
+                console.log(`Error 500: ${response.statusText}`);
+                break;
+              default:
+                console.log(`Something went wrong: ${response.statusText}`);
             }
           }
         });
