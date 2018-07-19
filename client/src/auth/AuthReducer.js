@@ -18,6 +18,7 @@ const AuthReducer = (state = authDefaults, action) => {
     case authActionTypes.registered: {
       return {
         ...state,
+        user: action.payload,
         authenticated: true
       }
     }

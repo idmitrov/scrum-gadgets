@@ -289,7 +289,12 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => {
-      return dispatch(authActions.logout());
+      return dispatch(authActions.logout())
+        .then(() => {
+          let notification = { type: 'success', message: 'Logout successful' };
+
+          dispatch(sharedActions.addNotification(notification));
+        });
     },
     closeNotification: () => {
       return dispatch(sharedActions.removeNotifications());

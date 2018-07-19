@@ -36,7 +36,7 @@ module.exports = {
   },
   register: (req, res) => {
     const salt = encryption.generateSalt();
-    console.log(req.body)
+
     const reqUser = {
       username: req.body.username,
       password: encryption.generateHashPass(salt, req.body.password),

@@ -124,7 +124,12 @@ const mapDispatchToProps = (dispatch) => {
      * @param {String} password
      */
     register(email, username, password) {
-      return dispatch(authActions.register(email, username, password));
+      return dispatch(authActions.register(email, username, password))
+        .then(() => {
+          let notification = { type: 'success', message: 'Register successful' };
+
+          dispatch(sharedActions.addNotification(notification));
+        });
     },
     /**
      * @name setValidationError

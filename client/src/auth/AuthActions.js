@@ -63,8 +63,12 @@ export const authActions = {
    * @desc Logout authenticated user
    */
   logout: () => (dispatch) => {
-    return dispatch({
-      type: authActionTypes.logout
-    });
+    return new Promise((resolve, reject) => {
+      resolve(
+        dispatch({
+          type: authActionTypes.logout
+        })
+      );
+    })
   }
 }
